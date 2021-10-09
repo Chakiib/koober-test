@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getCartTotals = void 0;
+exports.getCartTotals = exports.sumCartPrices = exports.getArticleTotal = void 0;
 /**
  * Calculate an article total price
  * The promise will be rejected in case we pass an articleId that isn't present in the articles list
@@ -23,20 +23,22 @@ const getArticleTotal = (articleId, quantity, articles) => {
             resolve(article.price * quantity);
     });
 };
+exports.getArticleTotal = getArticleTotal;
 const sumCartPrices = (cart, articles) => __awaiter(void 0, void 0, void 0, function* () {
     return yield cart.items.reduce((a, b) => __awaiter(void 0, void 0, void 0, function* () {
         const sumA = yield a;
-        const sumB = yield getArticleTotal(b.article_id, b.quantity, articles);
+        const sumB = yield (0, exports.getArticleTotal)(b.article_id, b.quantity, articles);
         return sumA + sumB;
     }), Promise.resolve(0));
 });
+exports.sumCartPrices = sumCartPrices;
 const getCartTotals = (data) => __awaiter(void 0, void 0, void 0, function* () {
     const { articles, carts } = data;
     const calculatedCart = { carts: [] };
     for (const cart of carts) {
         calculatedCart.carts.push({
             id: cart.id,
-            total: yield sumCartPrices(cart, articles),
+            total: yield (0, exports.sumCartPrices)(cart, articles),
         });
     }
     return calculatedCart;
