@@ -8,9 +8,8 @@
   },
   "scripts": {
     "tsc:watch": "tsc --watch",
-    "start": "node index.js",
-    "test": "jest",
-    "test:integration": "rm -f output.json && node index && diff expected_output.json output.json && echo 'Test passed!'"
+    "start": "tsc && node index.js",
+    "test": "tsc && jest"
   },
   "dependencies": {
     "jest": "^27.2.5",
