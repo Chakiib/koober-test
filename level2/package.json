@@ -3,11 +3,21 @@
   "private": true,
   "version": "1.0.0",
   "main": "index.js",
-  "engines" : { 
-    "node" : ">=8.0.0" 
+  "engines": {
+    "node": ">=8.0.0"
   },
   "scripts": {
+    "watch": "tsc --watch",
+    "dev": "nodemon index.js",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "test:integration": "rm -f output.json && node index && diff expected_output.json output.json && echo 'Test passed!'"
+  },
+  "dependencies": {
+    "typescript": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^16.10.3",
+    "nodemon": "^2.0.13"
   }
 }
