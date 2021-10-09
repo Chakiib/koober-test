@@ -1,4 +1,4 @@
-import { JsonData, OutputType, CartType, ArticleType } from './types';
+import { JsonData, OutputType, CartType, ArticleType, DeliveryFeeType } from './types';
 
 /**
  * Calculate an article total price
@@ -13,6 +13,22 @@ const getArticleTotal = (articleId: number, quantity: number, articles: ArticleT
     });
 };
 
+const getDeliveryFees = (price: number, deliveryFees: DeliveryFeeType[]): Promise<number> => {
+    return new Promise((resolve, _reject) => {
+        const transactionVolume = [...deliveryFees].find((fee) => {
+            const { min_price, max_price } = fee.eligible_transaction_volume;
+
+            /**
+             * Case when eligible_transaction_volume has a min AND max price : price >= min_price AND max_price > price
+             * Case when eligible_transaction_volume has a min_price ONLY: min_price >= price
+             */
+            return (min_price <= price && max_price && max_price > price) || min_price >= price;
+        });
+
+        resolve(transactionVolume?.price!);
+    });
+};
+
 const sumCartPrices = async (cart: CartType, articles: ArticleType[]): Promise<number> => {
     return await cart.items.reduce(async (a, b) => {
         const sumA = await a;
@@ -23,13 +39,16 @@ const sumCartPrices = async (cart: CartType, articles: ArticleType[]): Promise<n
 };
 
 export const getCartTotals = async (data: JsonData): Promise<OutputType> => {
-    const { articles, carts } = data;
+    const { articles, carts, delivery_fees } = data;
     const calculatedCart: OutputType = { carts: [] };
 
     for (const cart of carts) {
+        const totalPrice = await sumCartPrices(cart, articles);
+        const deliveryFees = await getDeliveryFees(totalPrice, delivery_fees);
+
         calculatedCart.carts.push({
             id: cart.id,
-            total: await sumCartPrices(cart, articles),
+            total: totalPrice + deliveryFees,
         });
     }
 
