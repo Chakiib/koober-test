@@ -15,7 +15,7 @@ const read = (fileName) => {
 exports.read = read;
 const write = (fileName, data) => {
     return new Promise((resolve, reject) => {
-        fs.wirteFile(fileName, data, 'utf8', (err) => {
+        fs.writeFile(fileName, data, 'utf8', (err) => {
             if (err)
                 reject(err);
             else

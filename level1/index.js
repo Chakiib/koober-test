@@ -10,13 +10,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
-    const { read } = require('./fileManager');
+    const { read, write } = require('./fileManager');
     try {
         const data = yield read('input.json');
         const inputData = JSON.parse(data);
         const { getCartTotals } = require('./cartManager');
         const calculatedCarts = yield getCartTotals(inputData);
         try {
+            yield write('output.json', JSON.stringify(calculatedCarts, null, 2));
         }
         catch (err) {
             console.log(err);

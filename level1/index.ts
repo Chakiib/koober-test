@@ -1,7 +1,7 @@
 import { JsonData } from './types';
 
 const main = async () => {
-    const { read } = require('./fileManager');
+    const { read, write } = require('./fileManager');
 
     try {
         const data = await read('input.json');
@@ -11,6 +11,7 @@ const main = async () => {
         const calculatedCarts = await getCartTotals(inputData);
 
         try {
+            await write('output.json', JSON.stringify(calculatedCarts, null, 2));
         } catch (err) {
             console.log(err);
         }
