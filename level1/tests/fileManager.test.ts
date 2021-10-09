@@ -2,7 +2,7 @@ import * as fileManager from '../fileManager';
 
 describe('fileManager', () => {
     describe('read', () => {
-        test('The promise is rejected', async () => {
+        test('The promise is rejected if the file does not exit', async () => {
             expect.assertions(1);
             try {
                 await fileManager.read('program.exe');
@@ -11,7 +11,7 @@ describe('fileManager', () => {
             }
         });
 
-        test('File data is returned', async () => {
+        test("The promise is resolved and the file's data is returned", async () => {
             expect.assertions(1);
             try {
                 const expected = [expect.stringMatching(/articles/), expect.stringMatching(/carts/)];
