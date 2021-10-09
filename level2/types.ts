@@ -14,9 +14,20 @@ export type CartType = {
     items: CartItemType[];
 };
 
+export type EligibleTransactionVolumeType = {
+    min_price: number;
+    max_price: number | null;
+};
+
+export type DeliveryFeeType = {
+    eligible_transaction_volume: EligibleTransactionVolumeType;
+    price: number;
+};
+
 export interface JsonData {
     articles: ArticleType[];
     carts: CartType[];
+    delivery_fees: DeliveryFeeType[];
 }
 
 export type CalculatedCartType = {
