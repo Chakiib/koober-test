@@ -9,7 +9,7 @@ import {
     DiscountTypeType,
 } from '../types';
 
-describe('cart', () => {
+describe('Cart', () => {
     describe('First data input', () => {
         const cart1Items: CartItemType[] = [
             { article_id: 1, quantity: 6 },

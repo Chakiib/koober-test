@@ -1,7 +1,7 @@
 import { Cart } from '../cart';
 import { ArticleType, CalculatedCartType, CartItemType, CartType, DeliveryFeeType } from '../types';
 
-describe('cartManager', () => {
+describe('Cart', () => {
     describe('First data input', () => {
         const cart1Items: CartItemType[] = [
             { article_id: 1, quantity: 6 },
