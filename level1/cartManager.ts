@@ -22,7 +22,7 @@ const sumCartPrices = async (cart: CartType, articles: ArticleType[]): Promise<n
     }, Promise.resolve(0));
 };
 
-export const getCartTotals = async (data: JsonData) => {
+export const getCartTotals = async (data: JsonData): Promise<OutputType> => {
     const { articles, carts } = data;
     const calculatedCart: OutputType = { carts: [] };
 
@@ -32,4 +32,6 @@ export const getCartTotals = async (data: JsonData) => {
             total: await sumCartPrices(cart, articles),
         });
     }
+
+    return calculatedCart;
 };

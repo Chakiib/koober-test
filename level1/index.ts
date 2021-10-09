@@ -13,7 +13,7 @@ const main = async () => {
         try {
             await write('output.json', JSON.stringify(calculatedCarts, null, 2));
         } catch (err) {
-            console.log(err);
+            console.error(err);
         }
     } catch (err) {
         console.error(err);

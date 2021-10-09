@@ -39,5 +39,6 @@ const getCartTotals = (data) => __awaiter(void 0, void 0, void 0, function* () {
             total: yield sumCartPrices(cart, articles),
         });
     }
+    return calculatedCart;
 });
 exports.getCartTotals = getCartTotals;

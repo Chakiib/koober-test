@@ -9,6 +9,7 @@
   "scripts": {
     "watch": "tsc --watch",
     "dev": "nodemon index.js",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "test:integration": "rm -f output.json && node index && diff expected_output.json output.json && echo 'Test passed!'"
   },

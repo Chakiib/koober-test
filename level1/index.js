@@ -20,7 +20,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
             yield write('output.json', JSON.stringify(calculatedCarts, null, 2));
         }
         catch (err) {
-            console.log(err);
+            console.error(err);
         }
     }
     catch (err) {
