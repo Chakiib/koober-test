@@ -104,7 +104,7 @@ describe('cartManager', () => {
         });
     });
 
-    describe('First data input', () => {
+    describe('Second data input', () => {
         const carts: CartType[] = [
             { id: 1, items: [] },
             { id: 2, items: [] },
