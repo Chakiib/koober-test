@@ -9,13 +9,20 @@
   "scripts": {
     "tsc:watch": "tsc --watch",
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "test:integration": "rm -f output.json && node index && diff expected_output.json output.json && echo 'Test passed!'"
   },
   "dependencies": {
+    "jest": "^27.2.5",
+    "ts-node": "^10.2.1",
     "typescript": "^4.4.3"
   },
   "devDependencies": {
-    "@types/node": "^16.10.3"
+    "@babel/core": "^7.15.8",
+    "@babel/preset-env": "^7.15.8",
+    "@babel/preset-typescript": "^7.15.0",
+    "@types/jest": "^27.0.2",
+    "@types/node": "^16.10.3",
+    "babel-jest": "^27.2.5"
   }
 }
