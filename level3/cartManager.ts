@@ -1,6 +1,6 @@
 import { JsonData, OutputType, CartType, ArticleType, DeliveryFeeType, DiscountType, DiscountTypeType } from './types';
 
-const getArticleDiscount = (articleId: number, discounts: DiscountType[]): Promise<DiscountType | undefined> => {
+export const getArticleDiscount = (articleId: number, discounts: DiscountType[]): Promise<DiscountType | undefined> => {
     return new Promise((resolve, _reject) => {
         const articleDiscount = discounts.find((discount) => discount.article_id === articleId);
 
@@ -12,7 +12,7 @@ const getArticleDiscount = (articleId: number, discounts: DiscountType[]): Promi
  * Calculate an article total price
  * The promise will be rejected in case we pass an articleId that isn't present in the articles list
  */
-const getArticleTotal = (
+export const getArticleTotal = (
     articleId: number,
     quantity: number,
     articles: ArticleType[],
@@ -38,7 +38,7 @@ const getArticleTotal = (
     });
 };
 
-const getDeliveryFees = (price: number, deliveryFees: DeliveryFeeType[]): Promise<number> => {
+export const getDeliveryFees = (price: number, deliveryFees: DeliveryFeeType[]): Promise<number> => {
     return new Promise((resolve, _reject) => {
         const transactionVolume = [...deliveryFees].find((fee) => {
             const { min_price, max_price } = fee.eligible_transaction_volume;
@@ -54,7 +54,11 @@ const getDeliveryFees = (price: number, deliveryFees: DeliveryFeeType[]): Promis
     });
 };
 
-const sumCartPrices = async (cart: CartType, articles: ArticleType[], discounts: DiscountType[]): Promise<number> => {
+export const sumCartPrices = async (
+    cart: CartType,
+    articles: ArticleType[],
+    discounts: DiscountType[]
+): Promise<number> => {
     return await cart.items.reduce(async (a, b) => {
         const sumA = await a;
         const sumB = await getArticleTotal(b.article_id, b.quantity, articles, discounts);
