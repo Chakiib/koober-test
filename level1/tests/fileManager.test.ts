@@ -21,4 +21,14 @@ describe('fileManager', () => {
             } catch (error) {}
         });
     });
+
+    describe('write', () => {
+        test('The promise is resolved', async () => {
+            expect.assertions(1);
+            try {
+                const data = await fileManager.write('output.test.json', '{}');
+                expect(data).toBeTruthy();
+            } catch (error) {}
+        });
+    });
 });
