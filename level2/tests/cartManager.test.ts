@@ -125,7 +125,7 @@ describe('cartManager', () => {
                 expect.assertions(1);
 
                 try {
-                    await await cartManager.getCartTotals({
+                    await cartManager.getCartTotals({
                         articles,
                         carts: [...carts, cartWithNonExisitingArticle],
                         delivery_fees,
@@ -253,7 +253,7 @@ describe('cartManager', () => {
                 expect.assertions(1);
 
                 try {
-                    await await cartManager.getCartTotals({
+                    await cartManager.getCartTotals({
                         articles,
                         carts: [...carts, cartWithNonExisitingArticle],
                         delivery_fees,

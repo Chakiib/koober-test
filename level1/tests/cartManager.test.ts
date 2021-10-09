@@ -88,7 +88,7 @@ describe('cartManager', () => {
                 expect.assertions(1);
 
                 try {
-                    await await cartManager.getCartTotals({ articles, carts: [...carts, cartWithNonExisitingArticle] });
+                    await cartManager.getCartTotals({ articles, carts: [...carts, cartWithNonExisitingArticle] });
                 } catch (error) {
                     expect(error).toMatch("The article isn't present in the articles list");
                 }
@@ -174,7 +174,7 @@ describe('cartManager', () => {
                 expect.assertions(1);
 
                 try {
-                    await await cartManager.getCartTotals({ articles, carts: [...carts, cartWithNonExisitingArticle] });
+                    await cartManager.getCartTotals({ articles, carts: [...carts, cartWithNonExisitingArticle] });
                 } catch (error) {
                     expect(error).toMatch("The article isn't present in the articles list");
                 }
