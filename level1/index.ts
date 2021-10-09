@@ -6,6 +6,9 @@ const main = async () => {
     try {
         const data = await read('input.json');
         const inputData: JsonData = JSON.parse(data);
+
+        const { getCartTotals } = require('./cartManager');
+        const calculatedCarts = await getCartTotals(inputData);
     } catch (error) {}
 };
 

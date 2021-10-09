@@ -9,16 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const main = () => __awaiter(void 0, void 0, void 0, function* () {
-    const { read } = require('./fileManager');
-    try {
-        const data = yield read('input.json');
-        const inputData = JSON.parse(data);
-        const { getCartTotals } = require('./cartManager');
-        const calculatedCarts = yield getCartTotals(inputData);
-    }
-    catch (error) { }
+exports.getCartTotals = void 0;
+const getCartTotals = (data) => __awaiter(void 0, void 0, void 0, function* () {
+    const { articles, carts } = data;
+    const calculatedCart = { carts: [] };
 });
-if (require.main === module) {
-    main();
-}
+exports.getCartTotals = getCartTotals;

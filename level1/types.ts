@@ -18,3 +18,12 @@ export interface JsonData {
     articles: ArticleType[];
     carts: CartType[];
 }
+
+export type CalculatedCartType = {
+    id: number;
+    total: number;
+};
+
+export interface OutputType {
+    carts: CalculatedCartType[];
+}
