@@ -5,10 +5,15 @@ const fs = require('fs');
 const read = (fileName) => {
     return new Promise((resolve, reject) => {
         fs.readFile(fileName, (err, data) => {
-            if (err)
-                reject(err);
-            else
+            if (err) {
+                if (err.code === 'ENOENT')
+                    reject('File not found!');
+                else
+                    reject(err);
+            }
+            else {
                 resolve(data.toString());
+            }
         });
     });
 };
