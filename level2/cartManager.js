@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getCartTotals = void 0;
+exports.getCartTotals = exports.sumCartPrices = exports.getDeliveryFees = exports.getArticleTotal = void 0;
 /**
  * Calculate an article total price
  * The promise will be rejected in case we pass an articleId that isn't present in the articles list
@@ -23,6 +23,7 @@ const getArticleTotal = (articleId, quantity, articles) => {
             resolve(article.price * quantity);
     });
 };
+exports.getArticleTotal = getArticleTotal;
 const getDeliveryFees = (price, deliveryFees) => {
     return new Promise((resolve, _reject) => {
         const transactionVolume = [...deliveryFees].find((fee) => {
@@ -36,19 +37,21 @@ const getDeliveryFees = (price, deliveryFees) => {
         resolve(transactionVolume === null || transactionVolume === void 0 ? void 0 : transactionVolume.price);
     });
 };
+exports.getDeliveryFees = getDeliveryFees;
 const sumCartPrices = (cart, articles) => __awaiter(void 0, void 0, void 0, function* () {
     return yield cart.items.reduce((a, b) => __awaiter(void 0, void 0, void 0, function* () {
         const sumA = yield a;
-        const sumB = yield getArticleTotal(b.article_id, b.quantity, articles);
+        const sumB = yield (0, exports.getArticleTotal)(b.article_id, b.quantity, articles);
         return sumA + sumB;
     }), Promise.resolve(0));
 });
+exports.sumCartPrices = sumCartPrices;
 const getCartTotals = (data) => __awaiter(void 0, void 0, void 0, function* () {
     const { articles, carts, delivery_fees } = data;
     const calculatedCart = { carts: [] };
     for (const cart of carts) {
-        const totalPrice = yield sumCartPrices(cart, articles);
-        const deliveryFees = yield getDeliveryFees(totalPrice, delivery_fees);
+        const totalPrice = yield (0, exports.sumCartPrices)(cart, articles);
+        const deliveryFees = yield (0, exports.getDeliveryFees)(totalPrice, delivery_fees);
         calculatedCart.carts.push({
             id: cart.id,
             total: totalPrice + deliveryFees,
