@@ -9,7 +9,14 @@ const main = async () => {
 
         const { getCartTotals } = require('./cartManager');
         const calculatedCarts = await getCartTotals(inputData);
-    } catch (error) {}
+
+        try {
+        } catch (err) {
+            console.log(err);
+        }
+    } catch (err) {
+        console.error(err);
+    }
 };
 
 if (require.main === module) {

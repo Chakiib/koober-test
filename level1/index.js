@@ -16,8 +16,15 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
         const inputData = JSON.parse(data);
         const { getCartTotals } = require('./cartManager');
         const calculatedCarts = yield getCartTotals(inputData);
+        try {
+        }
+        catch (err) {
+            console.log(err);
+        }
     }
-    catch (error) { }
+    catch (err) {
+        console.error(err);
+    }
 });
 if (require.main === module) {
     main();

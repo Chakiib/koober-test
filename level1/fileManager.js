@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.read = void 0;
+exports.write = exports.read = void 0;
 const fs = require('fs');
 const read = (fileName) => {
     return new Promise((resolve, reject) => {
@@ -13,3 +13,14 @@ const read = (fileName) => {
     });
 };
 exports.read = read;
+const write = (fileName, data) => {
+    return new Promise((resolve, reject) => {
+        fs.wirteFile(fileName, data, 'utf8', (err) => {
+            if (err)
+                reject(err);
+            else
+                resolve(true);
+        });
+    });
+};
+exports.write = write;
