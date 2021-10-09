@@ -8,11 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     const { read } = require('./fileManager');
     try {
         const data = yield read('input.json');
-        console.log(data);
+        const inputData = JSON.parse(data);
+        console.log('inputData', inputData);
     }
     catch (error) { }
 });
