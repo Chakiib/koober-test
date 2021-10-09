@@ -1,4 +1,4 @@
-import * as cartManager from '../cartManager';
+import { Cart } from '../cart';
 import {
     ArticleType,
     CalculatedCartType,
@@ -7,9 +7,9 @@ import {
     DeliveryFeeType,
     DiscountType,
     DiscountTypeType,
-} from './../types';
+} from '../types';
 
-describe('cartManager', () => {
+describe('cart', () => {
     describe('First data input', () => {
         const cart1Items: CartItemType[] = [
             { article_id: 1, quantity: 6 },
@@ -112,11 +112,13 @@ describe('cartManager', () => {
             { id: 5, total: 1328 },
         ];
 
+        const cart = new Cart({ carts, articles, delivery_fees, discounts });
+
         describe('getArticleTotal', () => {
             test("the promise is rejected if an article doesn't exist", async () => {
                 expect.assertions(1);
                 try {
-                    await cartManager.getArticleTotal(11, 5, articles, discounts);
+                    await cart.getArticleTotal(11, 5);
                 } catch (error) {
                     expect(error).toMatch("The article isn't present in the articles list");
                 }
@@ -125,11 +127,11 @@ describe('cartManager', () => {
             test('the promise is resolved and the article total is returned', async () => {
                 expect.assertions(5);
 
-                const result1 = await cartManager.getArticleTotal(1, 6, articles, discounts);
-                const result2 = await cartManager.getArticleTotal(2, 2, articles, discounts);
-                const result3 = await cartManager.getArticleTotal(3, 3, articles, discounts);
-                const result4 = await cartManager.getArticleTotal(4, 4, articles, discounts);
-                const result5 = await cartManager.getArticleTotal(5, 5, articles, discounts);
+                const result1 = await cart.getArticleTotal(1, 6);
+                const result2 = await cart.getArticleTotal(2, 2);
+                const result3 = await cart.getArticleTotal(3, 3);
+                const result4 = await cart.getArticleTotal(4, 4);
+                const result5 = await cart.getArticleTotal(5, 5);
 
                 expect(result1).toEqual(600);
                 expect(result2).toEqual(350);
@@ -144,7 +146,7 @@ describe('cartManager', () => {
                 expect.assertions(1);
 
                 try {
-                    await cartManager.sumCartPrices(cartWithNonExisitingArticle, articles, discounts);
+                    await cart.sumCartPrices(cartWithNonExisitingArticle);
                 } catch (error) {
                     expect(error).toMatch("The article isn't present in the articles list");
                 }
@@ -153,11 +155,11 @@ describe('cartManager', () => {
             test('the promise is resolved and the sum of the cart prices is returned', async () => {
                 expect.assertions(5);
 
-                const result1 = await cartManager.sumCartPrices(carts[0], articles, discounts);
-                const result2 = await cartManager.sumCartPrices(carts[1], articles, discounts);
-                const result3 = await cartManager.sumCartPrices(carts[2], articles, discounts);
-                const result4 = await cartManager.sumCartPrices(carts[3], articles, discounts);
-                const result5 = await cartManager.sumCartPrices(carts[4], articles, discounts);
+                const result1 = await cart.sumCartPrices(carts[0]);
+                const result2 = await cart.sumCartPrices(carts[1]);
+                const result3 = await cart.sumCartPrices(carts[2]);
+                const result4 = await cart.sumCartPrices(carts[3]);
+                const result5 = await cart.sumCartPrices(carts[4]);
 
                 expect(result1).toEqual(1950);
                 expect(result2).toEqual(1375);
@@ -171,9 +173,9 @@ describe('cartManager', () => {
             test('the promise is resolved and the delivery fees are returned', async () => {
                 expect.assertions(3);
 
-                const result1 = await cartManager.getDeliveryFees(2000, delivery_fees);
-                const result2 = await cartManager.getDeliveryFees(1400, delivery_fees);
-                const result3 = await cartManager.getDeliveryFees(0, delivery_fees);
+                const result1 = await cart.getDeliveryFees(2000);
+                const result2 = await cart.getDeliveryFees(1400);
+                const result3 = await cart.getDeliveryFees(0);
 
                 expect(result1).toEqual(0);
                 expect(result2).toEqual(400);
@@ -186,12 +188,14 @@ describe('cartManager', () => {
                 expect.assertions(1);
 
                 try {
-                    await await cartManager.getCartTotals({
+                    const errorCart = new Cart({
                         articles,
                         carts: [...carts, cartWithNonExisitingArticle],
                         delivery_fees,
                         discounts,
                     });
+
+                    await errorCart.calculate();
                 } catch (error) {
                     expect(error).toMatch("The article isn't present in the articles list");
                 }
@@ -200,7 +204,7 @@ describe('cartManager', () => {
             test('the promise is resolved and the cart totals are returned', async () => {
                 expect.assertions(1);
 
-                const result = await cartManager.getCartTotals({ articles, carts, delivery_fees, discounts });
+                const result = await cart.calculate();
 
                 expect(result).toEqual({ carts: cartTotals });
             });
