@@ -1,4 +1,4 @@
-import { Cart } from '../cartService';
+import { Cart } from '../cart';
 import { ArticleType, CalculatedCartType, CartItemType, CartType } from '../types';
 
 describe('CartService', () => {
@@ -107,89 +107,92 @@ describe('CartService', () => {
         });
     });
 
-    // describe('Second data input', () => {
-    //     const carts: CartType[] = [
-    //         { id: 1, items: [] },
-    //         { id: 2, items: [] },
-    //     ];
+    describe('Second data input', () => {
+        const carts: CartType[] = [
+            { id: 1, items: [] },
+            { id: 2, items: [] },
+        ];
 
-    //     const cartWithNonExisitingArticle: CartType = { id: 1, items: [{ article_id: 8, quantity: 6 }] };
+        const cartWithNonExisitingArticle: CartType = { id: 1, items: [{ article_id: 8, quantity: 6 }] };
 
-    //     const articles: ArticleType[] = [
-    //         { id: 1, name: 'article1', price: 50 },
-    //         { id: 2, name: 'article2', price: 100 },
-    //         { id: 3, name: 'article3', price: 150 },
-    //     ];
+        const articles: ArticleType[] = [
+            { id: 1, name: 'article1', price: 50 },
+            { id: 2, name: 'article2', price: 100 },
+            { id: 3, name: 'article3', price: 150 },
+        ];
 
-    //     const cartTotals: any = [
-    //         { id: 1, total: 0 },
-    //         { id: 2, total: 0 },
-    //     ];
+        const cart = new Cart({ carts, articles });
 
-    //     describe('getArticleTotal', () => {
-    //         test("the promise is rejected if an article doesn't exist", async () => {
-    //             expect.assertions(1);
+        const cartTotals: any = [
+            { id: 1, total: 0 },
+            { id: 2, total: 0 },
+        ];
 
-    //             try {
-    //                 await cartManager.getArticleTotal(7, 5, articles);
-    //             } catch (error) {
-    //                 expect(error).toMatch("The article isn't present in the articles list");
-    //             }
-    //         });
+        describe('getArticleTotal', () => {
+            test("the promise is rejected if an article doesn't exist", async () => {
+                expect.assertions(1);
 
-    //         test('the promise is resolved and the article total is returned', async () => {
-    //             expect.assertions(3);
+                try {
+                    await cart.getArticleTotal(7, 5);
+                } catch (error) {
+                    expect(error).toMatch("The article isn't present in the articles list");
+                }
+            });
 
-    //             const result1 = await cartManager.getArticleTotal(1, 6, articles);
-    //             const result2 = await cartManager.getArticleTotal(2, 2, articles);
-    //             const result3 = await cartManager.getArticleTotal(3, 3, articles);
+            test('the promise is resolved and the article total is returned', async () => {
+                expect.assertions(3);
 
-    //             expect(result1).toEqual(300);
-    //             expect(result2).toEqual(200);
-    //             expect(result3).toEqual(450);
-    //         });
-    //     });
+                const result1 = await cart.getArticleTotal(1, 6);
+                const result2 = await cart.getArticleTotal(2, 2);
+                const result3 = await cart.getArticleTotal(3, 3);
 
-    //     describe('sumCartPrices', () => {
-    //         test("the promise is rejected if an article doesn't exist", async () => {
-    //             expect.assertions(1);
+                expect(result1).toEqual(300);
+                expect(result2).toEqual(200);
+                expect(result3).toEqual(450);
+            });
+        });
 
-    //             try {
-    //                 await cartManager.sumCartPrices(cartWithNonExisitingArticle, articles);
-    //             } catch (error) {
-    //                 expect(error).toMatch("The article isn't present in the articles list");
-    //             }
-    //         });
+        describe('sumCartPrices', () => {
+            test("the promise is rejected if an article doesn't exist", async () => {
+                expect.assertions(1);
 
-    //         test('the promise is resolved and the sum of the cart prices is returned', async () => {
-    //             expect.assertions(2);
+                try {
+                    await cart.sumCartPrices(cartWithNonExisitingArticle);
+                } catch (error) {
+                    expect(error).toMatch("The article isn't present in the articles list");
+                }
+            });
 
-    //             const result1 = await cartManager.sumCartPrices(carts[0], articles);
-    //             const result2 = await cartManager.sumCartPrices(carts[1], articles);
+            test('the promise is resolved and the sum of the cart prices is returned', async () => {
+                expect.assertions(2);
 
-    //             expect(result1).toEqual(0);
-    //             expect(result2).toEqual(0);
-    //         });
-    //     });
+                const result1 = await cart.sumCartPrices(carts[0]);
+                const result2 = await cart.sumCartPrices(carts[1]);
 
-    //     describe('getCartTotals', () => {
-    //         test("the promise is rejected if an article doesn't exist", async () => {
-    //             expect.assertions(1);
+                expect(result1).toEqual(0);
+                expect(result2).toEqual(0);
+            });
+        });
 
-    //             try {
-    //                 await await cartManager.getCartTotals({ articles, carts: [...carts, cartWithNonExisitingArticle] });
-    //             } catch (error) {
-    //                 expect(error).toMatch("The article isn't present in the articles list");
-    //             }
-    //         });
+        describe('getCartTotals', () => {
+            test("the promise is rejected if an article doesn't exist", async () => {
+                expect.assertions(1);
 
-    //         test('the promise is resolved and the cart totals are returned', async () => {
-    //             expect.assertions(1);
+                try {
+                    const errorCart = new Cart({ articles, carts: [...carts, cartWithNonExisitingArticle] });
+                    await await errorCart.calculate();
+                } catch (error) {
+                    expect(error).toMatch("The article isn't present in the articles list");
+                }
+            });
 
-    //             const result = await cartManager.getCartTotals({ articles, carts });
+            test('the promise is resolved and the cart totals are returned', async () => {
+                expect.assertions(1);
 
-    //             expect(result).toEqual({ carts: cartTotals });
-    //         });
-    //     });
-    // });
+                const result = await cart.calculate();
+
+                expect(result).toEqual({ carts: cartTotals });
+            });
+        });
+    });
 });

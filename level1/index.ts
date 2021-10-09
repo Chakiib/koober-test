@@ -7,7 +7,7 @@ const main = async () => {
         const data = await read('input.json');
         const inputData: JsonData = JSON.parse(data);
 
-        const { Cart } = require('./cartService');
+        const { Cart } = require('./cart');
         const cart = new Cart(inputData);
 
         const calculatedCarts = await cart.calculate(inputData);
