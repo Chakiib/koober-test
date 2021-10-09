@@ -10,7 +10,7 @@ const main = async () => {
         const { Cart } = require('./cart');
         const cart = new Cart(inputData);
 
-        const calculatedCarts = await cart.calculate(inputData);
+        const calculatedCarts = await cart.calculate();
 
         try {
             await write('output.json', JSON.stringify(calculatedCarts, null, 2));

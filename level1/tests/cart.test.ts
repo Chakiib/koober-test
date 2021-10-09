@@ -91,7 +91,7 @@ describe('CartService', () => {
 
                 try {
                     const errorCart = new Cart({ articles, carts: [...carts, cartWithNonExisitingArticle] });
-                    await await errorCart.calculate();
+                    await errorCart.calculate();
                 } catch (error) {
                     expect(error).toMatch("The article isn't present in the articles list");
                 }
@@ -180,7 +180,7 @@ describe('CartService', () => {
 
                 try {
                     const errorCart = new Cart({ articles, carts: [...carts, cartWithNonExisitingArticle] });
-                    await await errorCart.calculate();
+                    await errorCart.calculate();
                 } catch (error) {
                     expect(error).toMatch("The article isn't present in the articles list");
                 }
