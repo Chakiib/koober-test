@@ -7,8 +7,10 @@ const main = async () => {
         const data = await read('input.json');
         const inputData: JsonData = JSON.parse(data);
 
-        const { getCartTotals } = require('./cartManager');
-        const calculatedCarts = await getCartTotals(inputData);
+        const { Cart } = require('./cartService');
+        const cart = new Cart(inputData);
+
+        const calculatedCarts = await cart.calculate(inputData);
 
         try {
             await write('output.json', JSON.stringify(calculatedCarts, null, 2));

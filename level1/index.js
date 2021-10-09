@@ -14,8 +14,9 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const data = yield read('input.json');
         const inputData = JSON.parse(data);
-        const { getCartTotals } = require('./cartManager');
-        const calculatedCarts = yield getCartTotals(inputData);
+        const { Cart } = require('./cartService');
+        const cart = new Cart(inputData);
+        const calculatedCarts = yield cart.calculate(inputData);
         try {
             yield write('output.json', JSON.stringify(calculatedCarts, null, 2));
         }
