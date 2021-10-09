@@ -24,10 +24,22 @@ export type DeliveryFeeType = {
     price: number;
 };
 
+export enum DiscountTypeType {
+    amount = 'amount',
+    percentage = 'percentage',
+}
+
+export type DiscountType = {
+    article_id: number;
+    type: DiscountTypeType;
+    value: number;
+};
+
 export interface JsonData {
     articles: ArticleType[];
     carts: CartType[];
     delivery_fees: DeliveryFeeType[];
+    discounts: DiscountType[];
 }
 
 export type CalculatedCartType = {
