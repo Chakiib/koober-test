@@ -40,3 +40,4 @@ workflows:
             app-dir: level1 
             run-command: test
             test-results-for: jest 
+            test-results-path: level1/coverage/
