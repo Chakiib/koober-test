@@ -21,7 +21,7 @@ jobs:
           name: remove package lock
           command: rm package-lock.json
       - store_test_results:
-          path: level1/coverage/clover.xml
+          path: level1/coverage/
 
 workflows:
     example-workflow:
