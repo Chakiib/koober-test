@@ -17,6 +17,9 @@ jobs:
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
       - checkout
+      - run:
+          name: remove package lock
+          command: rm package-lock.json
 
 # # Invoke jobs via workflows
 # # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
@@ -32,3 +35,5 @@ workflows:
             app-dir: level1 
             test-results-for: jest 
             test-results-path: level1/coverage/clover.xml
+        # - store_test_results:
+        #       path: level1/coverage/clover.xml
