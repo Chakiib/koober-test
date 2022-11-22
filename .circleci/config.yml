@@ -18,15 +18,24 @@ jobs:
     steps:
       - checkout
       - run:
-          name: remove package lock
-          command: rm package-lock.json
+          name: Install NPM dependencies
+          command: npm ci
+      - run:
+          name: Run tests
+          command: npm run test
       - store_test_results:
           path: level1/coverage/
 
+# Invoke jobs via workflows
+# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-    example-workflow:
-      jobs:
-        - node/test:
-            app-dir: level1 
-            test-results-for: jest 
-            test-results-path: level1/coverage/
+  say-hello-workflow:
+    jobs:
+      - say-hello
+
+# workflows:
+#     example-workflow:
+#       jobs:
+#         - node/test:
+#             app-dir: level1 
+#             test-results-for: jest 
