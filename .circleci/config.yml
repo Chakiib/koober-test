@@ -29,4 +29,4 @@ workflows:
         - node/test:
             app-dir: level1 
             test-results-for: jest 
-            test-results-path: ./clover.xml
+            test-results-path: level1/coverage/
